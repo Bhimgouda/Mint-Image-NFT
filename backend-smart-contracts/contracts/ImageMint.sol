@@ -16,22 +16,24 @@ contract ImageMintTesting is ERC721, Ownable {
     uint256 private s_tokenCounter;
 
     // Events
-    event NftMinted(uint256 tokenId, address tokenOwner);
+    event NftMinted(uint256 indexedtokenId, address tokenOwner);
 
     constructor() ERC721(NAME, SYMBOL) {}
 
     function requestNft(
         address nftOwner,
         string memory tokenUri
-    ) external onlyOwner {
+    ) external onlyOwner returns (uint256, address) {
         uint256 tokenId = s_tokenCounter;
         if (tokenId >= 50) {
             revert ImageMintTesting__MaxTokenSupplyReached();
         }
         _safeMint(nftOwner, tokenId);
         s_tokenUris[tokenId] = tokenUri;
-        emit NftMinted(tokenId, nftOwner);
         s_tokenCounter++;
+
+        emit NftMinted(tokenId, nftOwner);
+        return (tokenId, nftOwner);
     }
 
     function tokenURI(

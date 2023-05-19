@@ -10,7 +10,7 @@ module.exports = async ({getNamedAccounts, deployments}) => {
 
     const args = []
 
-    const ImageMint = await deploy("Testing", {
+    const ImageMint = await deploy("ImageMintTesting", {
         from: deployer,
         args: [],
         log: true,
@@ -22,3 +22,5 @@ module.exports = async ({getNamedAccounts, deployments}) => {
         await verify(ImageMint.address, args)
     }
 }
+
+module.exports.tags = ["all", "imageMint", "main"]

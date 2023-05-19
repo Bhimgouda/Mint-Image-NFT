@@ -4,7 +4,7 @@ const mongoose = require("mongoose")
 const app = express()
 const cors = require("cors")
 const multer = require("multer");
-const { uploadToIpfs } = require("./controller/uploadToIpfs")
+const { uploadToIpfsAndMint } = require("./controller/uploadToIpfsAndMint")
 
 const PORT = process.env.PORT
 const MONGODB_URI = process.env.MONGODB_URI
@@ -17,7 +17,7 @@ app.use(express.urlencoded({extended: true}))
 const storage = multer.memoryStorage()
 const upload = multer({storage: storage})
 
-app.post("/api/upload-to-ipfs", upload.single("image"), uploadToIpfs)
+app.post("/api/upload-to-ipfs", upload.single("image"), uploadToIpfsAndMint)
 
 app.use((err,req,res,next)=>{
     console.log(err.stack)

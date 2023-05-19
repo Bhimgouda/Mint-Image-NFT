@@ -4,7 +4,9 @@ const mongoose = require("mongoose")
 const app = express()
 const cors = require("cors")
 const multer = require("multer");
-const { uploadToIpfsAndMint } = require("./controller/uploadToIpfsAndMint")
+const { mintCustomNft } = require("./controller/mintCustomNft")
+const { decryptUser } = require("./utils/decryptUser")
+const { getMintedNft } = require("./controller/getMintedNft")
 
 const PORT = process.env.PORT
 const MONGODB_URI = process.env.MONGODB_URI
@@ -12,12 +14,14 @@ const MONGODB_URI = process.env.MONGODB_URI
 app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
+app.use(decryptUser)
 
 // Multer storage Config
 const storage = multer.memoryStorage()
 const upload = multer({storage: storage})
 
-app.post("/api/upload-to-ipfs", upload.single("image"), uploadToIpfsAndMint)
+app.get("/api/get-nft", getMintedNft)
+app.post("/api/mint-nft", upload.single("image"), mintCustomNft)
 
 app.use((err,req,res,next)=>{
     console.log(err.stack)

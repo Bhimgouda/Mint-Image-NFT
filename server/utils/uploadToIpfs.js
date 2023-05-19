@@ -16,7 +16,7 @@ exports.uploadToIpfs = async function(buffer, filename, name, description){
               Authorization: PINATA_JWT
             }
       }
-      const {IpfsHash} = (await axios(imageUploadConfig)).data;
+      const {IpfsHash: imageIpfsHash} = (await axios(imageUploadConfig)).data;
   
       console.log("-----Uploaded image to Ipfs-----")
       
@@ -25,14 +25,14 @@ exports.uploadToIpfs = async function(buffer, filename, name, description){
             "cidVersion": 1
           },
           "pinataMetadata": {
-            "name": "testing",
+            "name": name,
             "keyvalues": {
             }
           },
           "pinataContent": {
             "name": name,
             "description": description,
-            "image": `ipfs://${IpfsHash}`,
+            "image": `ipfs://${imageIpfsHash}`,
             "attributes": []
           }
       });
@@ -47,7 +47,7 @@ exports.uploadToIpfs = async function(buffer, filename, name, description){
           data : tokenUriJson
       };
       
-      const {data: tokenUri} = await axios(jsonUploadConfig);
+      const {IpfsHash: tokenIpfsHash} = await axios(jsonUploadConfig);
       console.log("-----Uploaded tokenUri JSON")
-      return(tokenUri);
+      return({tokenIpfsHash, imageUri: `ipfs://${imageIpfsHash}`});
   }

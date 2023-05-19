@@ -22,8 +22,8 @@ const {developmentChains} = require("../../helper-hardhat.config")
           await requestTx.wait();
       
           const tokenCounter = await imageMintTesting.getTokenCounter();
-          const tokenOwner = await imageMintTesting.ownerOf(tokenCounter - 1);
-          assert.equal(tokenOwner, addr1.address)
+          const nftOwner = await imageMintTesting.ownerOf(tokenCounter - 1);
+          assert.equal(nftOwner, addr1.address)
       
           const tokenURI = await imageMintTesting.tokenURI(tokenCounter - 1);
           assert.equal(tokenURI, tokenUri)

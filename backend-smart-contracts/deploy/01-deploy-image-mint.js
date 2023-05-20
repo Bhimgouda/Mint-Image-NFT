@@ -10,14 +10,14 @@ module.exports = async ({getNamedAccounts, deployments}) => {
 
     const args = []
 
-    const ImageMint = await deploy("ImageMintTesting", {
+    const ImageMint = await deploy("ImageMint", {
         from: deployer,
         args: [],
         log: true,
         waitConfirmations: network.config.blockConfirmations || 1,
     })
 
-    if(!developmentChains.includes(network.name) && process.env.ETHERSCAN_API_KEY) {
+    if(!developmentChains.includes(network.name) && process.env.ETHERSCAN_API_KEY && network.name !== "polygon") {
         log("Verifying.....")
         await verify(ImageMint.address, args)
     }

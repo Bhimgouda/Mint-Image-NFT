@@ -4,12 +4,12 @@ pragma solidity ^0.8.8;
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-error ImageMintTesting__MaxTokenSupplyReached();
+error ImageMint__MaxTokenSupplyReached();
 
-contract ImageMintTesting is ERC721, Ownable {
+contract ImageMint is ERC721, Ownable {
     // NFT contract Metadata
-    string private constant NAME = "Testing";
-    string private constant SYMBOL = "TEST";
+    string private constant NAME = "ImageMint";
+    string private constant SYMBOL = "IMT";
 
     // NFT state variables
     string[50] private s_tokenUris;
@@ -26,7 +26,7 @@ contract ImageMintTesting is ERC721, Ownable {
     ) external onlyOwner {
         uint256 tokenId = s_tokenCounter;
         if (tokenId >= 50) {
-            revert ImageMintTesting__MaxTokenSupplyReached();
+            revert ImageMint__MaxTokenSupplyReached();
         }
         _safeMint(nftOwner, tokenId);
         s_tokenUris[tokenId] = tokenUri;

@@ -2,7 +2,7 @@ import {ConnectButton} from "web3uikit"
 
 const Header = () => {
     return ( 
-        <nav>
+        <nav className="header">
                 <ConnectButton moralisAuth={false}/>
         </nav>
      );

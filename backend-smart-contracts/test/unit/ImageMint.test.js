@@ -5,27 +5,27 @@ const {developmentChains} = require("../../helper-hardhat.config")
 
 !developmentChains.includes(network.name)
     ? describe.skip
-    : describe("ImageMintTesting", function () {
-        let imageMintTesting
+    : describe("ImageMint", function () {
+        let imageMint
         let deployer
         let addr1
       
         beforeEach(async function () {
             [deployer, addr1] = await ethers.getSigners();
             await deployments.fixture(["imageMint"])
-            imageMintTesting = await ethers.getContract("ImageMintTesting");
+            imageMint = await ethers.getContract("ImageMint");
         });
       
         it("should mint an NFT", async function () {
           const tokenUri = "https://example.com/token-uri";
-          const requestTx = await imageMintTesting.requestNft(addr1.address, tokenUri);
+          const requestTx = await imageMint.requestNft(addr1.address, tokenUri);
           await requestTx.wait();
       
-          const tokenCounter = await imageMintTesting.getTokenCounter();
-          const nftOwner = await imageMintTesting.ownerOf(tokenCounter - 1);
+          const tokenCounter = await imageMint.getTokenCounter();
+          const nftOwner = await imageMint.ownerOf(tokenCounter - 1);
           assert.equal(nftOwner, addr1.address)
       
-          const tokenURI = await imageMintTesting.tokenURI(tokenCounter - 1);
+          const tokenURI = await imageMint.tokenURI(tokenCounter - 1);
           assert.equal(tokenURI, tokenUri)
         });
       
@@ -34,12 +34,12 @@ const {developmentChains} = require("../../helper-hardhat.config")
       
           // Mint 50 tokens
           for (let i = 0; i < 50; i++) {
-            await imageMintTesting.requestNft(addr1.address, tokenUri);
+            await imageMint.requestNft(addr1.address, tokenUri);
           }
       
           // Attempt to mint one more token
           await expect(
-            imageMintTesting.requestNft(addr1.address, tokenUri)
-          ).to.be.revertedWith("ImageMintTesting__MaxTokenSupplyReached");
+            imageMint.requestNft(addr1.address, tokenUri)
+          ).to.be.revertedWith("ImageMint__MaxTokenSupplyReached");
         });
       });

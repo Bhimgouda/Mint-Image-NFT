@@ -3,7 +3,7 @@ const { catchAsync } = require("../utils/catchAsync");
 
 exports.getMintedNft = catchAsync(async(req, res)=>{
     const {walletAddress} = req;
-    const nft = await Nft.findOne({nftOwner: walletAddress})
+    const nft = await Nft.findOne({tokenId: 1})
     console.log(nft)
     return res.send(nft)
 })

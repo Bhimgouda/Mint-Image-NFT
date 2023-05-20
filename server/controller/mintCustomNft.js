@@ -1,21 +1,27 @@
 const { uploadToIpfs } = require('../utils/uploadToIpfs');
 const {ethers} = require("ethers")
-const CONTRACT = require("../../backend-smart-contracts/deployments/sepolia/ImageMintTesting.json");
+const POLYGON_CONTRACT = require("../../backend-smart-contracts/deployments/polygon/ImageMint.json");
+const SEPOLIA_CONTRACT = require("../../backend-smart-contracts/deployments/sepolia/ImageMint.json");
 const { catchAsync } = require('../utils/catchAsync');
 const { createToken } = require('../utils/createJwtToken');
 const CustomError = require('../utils/customError');
 const Nft = require('../model/Nft');
 
 const PRIVATE_KEY = process.env.PRIVATE_KEY
-const CONTRACT_ADDRESS = CONTRACT.address
-const CONTRACT_ABI = CONTRACT.abi
+let CONTRACT_ADDRESS;
+let CONTRACT_ABI;
 let RPC_URL;
+const CURRENT_CHAIN_ID = process.env.CURRENT_CHAIN_ID
 
-if(process.env.CURRENT_CHAIN_ID === "11155111"){
+if(CURRENT_CHAIN_ID === "11155111"){
   RPC_URL=process.env.SEPOLIA_RPC_URL
+  CONTRACT_ADDRESS = SEPOLIA_CONTRACT.address
+  CONTRACT_ABI = SEPOLIA_CONTRACT.abi
 }
-else if(process.env.CURRENT_CHAIN_ID === "137"){
+else if(CURRENT_CHAIN_ID === "137"){
   RPC_URL=process.env.POLYGON_RPC_URL
+  CONTRACT_ADDRESS = POLYGON_CONTRACT.address
+  CONTRACT_ABI = POLYGON_CONTRACT.abi
 }
 
 const mintCustomNft = catchAsync(async(req,res)=>{
@@ -32,7 +38,14 @@ const mintCustomNft = catchAsync(async(req,res)=>{
   const WALLET = new ethers.Wallet(PRIVATE_KEY, PROVIDER)
   const ImageMintContract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, WALLET)
 
-  const tx = await ImageMintContract.requestNft(walletAddress, tokenURI);
+  let tx;
+  if(CURRENT_CHAIN_ID === "11155111"){
+    tx = await ImageMintContract.requestNft(walletAddress, tokenURI);
+  }
+  else if(CURRENT_CHAIN_ID === "137"){
+    const gasPrice = ethers.parseUnits('150', 'gwei'); // Set your desired gas price here
+    tx = await ImageMintContract.requestNft(walletAddress, tokenURI, { gasPrice });
+  }
   const receipt = await tx.wait()
 
   const events = await ImageMintContract.queryFilter("NftMinted", receipt.blockNumber);

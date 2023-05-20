@@ -1,3 +1,259 @@
 body {
   margin: 0;
 }
+* {
+  box-sizing: border-box;
+}
+
+img {
+  width: 100%;
+}
+
+@font-face {
+  font-family: "Satoshi-Medium";
+  src: url("../public/fonts/Satoshi-Medium.woff2") format("woff2"),
+    url("../public/fonts/Satoshi-Medium.woff") format("woff");
+  font-weight: 400;
+  font-display: swap;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Satoshi-Black";
+  src: url("../public/fonts/Satoshi-Black.woff2") format("woff2"),
+    url("../public/fonts/Satoshi-Black.woff") format("woff");
+  font-weight: 900;
+  font-display: swap;
+  font-style: normal;
+}
+
+:root {
+  /*Primary*/
+  --color-orange: hsl(26, 100%, 55%);
+  --color-pale-orange: hsl(25, 100%, 94%);
+
+  /*Neutral*/
+  --color-Very-vark-blue: hsl(220, 13%, 13%);
+  --color-Dark-grayish-blue: hsl(219, 9%, 45%);
+  --color-Grayish-blue: hsl(220, 14%, 75%);
+  --color-Light-grayish-blue: hsl(223, 64%, 98%);
+  --color-White: hsl(0, 0%, 100%);
+  --color-Black: hsl(0, 0%, 0%);
+
+  /* Google sign in btn colors */
+
+  --color-white: #fff;
+  --color-google-blue: #4285f4;
+  --color-button-active-blue: #1669f2;
+
+  --font-Satoshi-Black: "Satoshi-Black", sans-serif;
+  --font-poppins: "Poppins", sans-serif;
+  --font-satoshi-regular: "Satoshi-Medium", sans-serif;
+
+  /*  (black with 75% opacity for lightbox background) */
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-family: var(--font-satoshi-regular);
+}
+
+.btn {
+  font-family: var(--font-satoshi-regular);
+  padding: 10px;
+  border-radius: 5px;
+  background: var(--color-orange);
+  color: white;
+  border: none;
+  font-size: 25px;
+  cursor: pointer;
+}
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: var(--color-orange);
+  height: 100vh;
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+}
+
+.notice {
+  font-family: var(--font-Satoshi-Black);
+  color: var(--color-orange);
+}
+
+h2 {
+  font-family: var(--font-Satoshi-Black);
+}
+
+.file-input {
+  display: none;
+}
+
+.form {
+  width: 80%;
+  padding: 20px;
+  padding-top: 100px;
+}
+
+.drag-drop-area {
+  border: 2px dashed #ccc;
+  text-align: center;
+  /* Increase the height and width to expand the drag area */
+  height: 250px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.file-label {
+  border: 2px solid #ccc;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+}
+
+.file-text {
+  color: var(--color-orange);
+  margin-top: 0.5rem;
+}
+
+.plus-icon {
+  font-size: 40px;
+}
+
+.drag-drop-area.drag-over {
+  border-color: #888;
+  background-color: #f0f0f0;
+}
+
+.input-wrapper {
+  margin-bottom: 1.5rem;
+}
+
+.input-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.input-field {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.app__mint {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.hero-image {
+  height: 500px;
+  padding: 20px;
+}
+
+/* NFT details */
+
+.nft-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.5rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+}
+
+.nft-card-container {
+  height: 100vh;
+  display: flex;
+  padding-left: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+.nft-image-container {
+  max-width: 350px;
+  display: flex;
+  max-height: 400px;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.nft-image {
+  margin-top: 21px;
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+
+.nft-details {
+  text-align: center;
+}
+
+.nft-name {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.nft-description {
+  margin-bottom: 2rem;
+}
+
+.nft-card p {
+  margin: 4px;
+}
+
+.nft-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.nft-info-label {
+  font-weight: bold;
+}
+
+.nft-info-value {
+  color: #666;
+}
+
+/* Additional styles to enhance the card appearance */
+.nft-card:hover {
+  border-color: #999;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.nft-card:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.3);
+}
+
+.nft-card:focus-within {
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.3), 0 4px 8px rgba(0, 0, 0, 0.1);
+}

@@ -47,7 +47,7 @@ exports.uploadToIpfs = async function(buffer, filename, name, description){
           data : tokenUriJson
       };
       
-      const {IpfsHash: tokenIpfsHash} = await axios(jsonUploadConfig);
-      console.log("-----Uploaded tokenUri JSON")
-      return({tokenIpfsHash, imageUri: `ipfs://${imageIpfsHash}`});
+      const {data} = await axios(jsonUploadConfig);
+      console.log("-----Uploaded tokenUri JSON-----")
+      return({tokenIpfsHash: data.IpfsHash, imageUri: `ipfs://${imageIpfsHash}`});
   }

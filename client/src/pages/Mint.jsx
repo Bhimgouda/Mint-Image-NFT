@@ -79,7 +79,7 @@ const Mint = () => {
   };
 
   const getNft = async (jwtToken) => {
-    const { data } = await axios.get("http://localhost:5000/api/get-nft", {
+    const { data } = await axios.get("https://api-image-mint.bhim.me/api/get-nft", {
       headers: {
         Authorization: `Bearer ${jwtToken}`,
       },
@@ -130,7 +130,7 @@ const Mint = () => {
 
     setLoading(true);
     const { data } = await axios.post(
-      "http://localhost:5000/api/mint-nft",
+      "https://api-image-mint.bhim.me/api/mint-nft",
       formData
     );
     localStorage.setItem("jwtToken", data.jwtToken);
